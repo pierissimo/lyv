@@ -1,44 +1,20 @@
-module.exports = {
-	properties: {
-		title: {
-			type: 'string'
-		},
-		pages: {
-			type: 'array',
-			items: {
-				type: 'object',
-				number: {
-					type: 'string'
-				},
-				required: ['number']
-			}
-		},
-		position: {
-			type: 'object',
-			properties: {
-				lat: {
-					type: 'string'
-				},
-				long: {
-					type: 'string',
-					asyncValidation: {}
-				},
-				nested: {
-					type: 'array',
-					minItems: 1,
-					contains: {
-						type: 'object',
-						properties: {
-							mimmo: {
-								type: 'number'
-							}
-						},
-						required: ['mimmo']
-					}
-				}
-			},
-			required: ['lat', 'long']
-		}
-	},
-	required: ['name', 'position']
-};
+const yup = require('yup');
+
+module.exports = yup.object().shape({
+	title: yup.string().required(),
+	type: yup.string(),
+	pages: yup.array().of(
+		yup.object().shape({
+			number: yup.string().required()
+		})
+	),
+	position: yup.object().shape({
+		lat: yup.string().required(),
+		long: yup.string().required(),
+		nested: yup.array().min(1).of(
+			yup.object().shape({
+				mimmo: yup.number().required()
+			})
+		)
+	})
+})

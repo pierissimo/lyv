@@ -1,5 +1,6 @@
 const should = require('should');
 const app = require('loopback');
+const yup = require('yup');
 const schema = require('../support/schema');
 const data = require('../support/data');
 
@@ -15,16 +16,12 @@ require('../../index')(app);
 
 describe('loopback datasource validation', () => {
 	it('validation should fail', done => {
-		const Book = dataSource.createModel('Book',
-			{ name: String, type: String },
-			{
-				validationSchema: schema,
-				mixins: { AdvancedValidation: {} }
-			}
-		);
-
+		const Book = dataSource.createModel('Book', {}, { mixins: { AdvancedValidation: {} } });
+		Book.registerSchema(schema);
 		Book.create(data)
-			.then(book => {})
+			.then(book => {
+				throw new Error('you shouldn\'t get here');
+			})
 			.catch(err => {
 				err.should.not.be.Undefined();
 				done();
@@ -32,26 +29,28 @@ describe('loopback datasource validation', () => {
 	});
 
 	it('validation should succeed', done => {
-		const Man = dataSource.createModel('Name',
-			{ name: String },
-			{
-				validationSchema: {
-					properties: {
-						name: {
-							type: 'string'
-						}
-					},
-					required: ['name']
-				},
-				mixins: { AdvancedValidation: {} }
-			}
+		const Man = dataSource.createModel('Name', {
+			name: String,
+			favouriteNumber: Number
+		}, { mixins: { AdvancedValidation: {} } });
+
+		Man.registerSchema(
+			yup.object().shape({
+				name: yup.string(),
+				favouriteNumber: yup.number().required(),
+				type: yup.string()
+			})
 		);
 
-		const manData = { name: 'Piero' };
+		const manData = { name: 'Piero', favouriteNumber: '10' };
 		Man.create(manData)
 			.then(book => {
-				book.toObject().should.have.property('name').eql(manData.name);
+				const theBook = book.toObject();
+				theBook.should.have.property('name').eql(manData.name);
+				theBook.should.have.property('favouriteNumber').eql(10);
 				done();
-			})
+			});
+
+
 	});
 });
