@@ -2,3 +2,6 @@
 --ui bdd
 --recursive
 --bail
+--check-leaks
+--globals sinon,_
+test/
