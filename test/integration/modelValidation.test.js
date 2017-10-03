@@ -50,8 +50,6 @@ describe('loopback datasource validation', () => {
         theBook.should.have.property('favouriteNumber').eql(10)
         done()
       })
-
-
   })
 
   it('partial update validation should succeed', async () => {
