@@ -17,7 +17,7 @@ deployment:
     production:
         branch: master
         commands:
-            - yarn publish --access public
+            - npm publish --access public
             # tag the master branch and push
             - git config --global user.email "circleci@oneflowsystems.com"
             - git config --global user.name "Circle CI"
