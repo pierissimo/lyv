@@ -26,7 +26,7 @@ deployment:
             # checkout development and bump the version
             - git checkout -b circle-ci-version-bump origin/development
             - git pull
-            - yarn --no-git-tag-version version patch
+            - npm --no-git-tag-version version patch
             - git add package.json
             - git commit -m "`grep '"version"' package.json | egrep -o "[0-9]+.[0-9]+.[0-9]+"`"
             - git push -u origin circle-ci-version-bump:development --follow-tags
