@@ -1,6 +1,7 @@
 const should = require('should')
 const app = require('loopback')
-const yup = require('yup')
+const { yup } = require('../../index')
+const AdvancedValidation = require('../../lib/lyvMixin')
 const schema = require('../support/schema')
 const data = require('../support/data')
 
@@ -12,7 +13,7 @@ const dataSource = app.createDataSource({
   connector: app.Memory,
 })
 
-require('../../index')(app)
+app.loopback.modelBuilder.mixins.define('AdvancedValidation', AdvancedValidation)
 
 describe('loopback datasource validation', () => {
   it('validation should fail', done => {
@@ -37,12 +38,17 @@ describe('loopback datasource validation', () => {
     Book.registerSchema(
       yup.object().shape({
         name: yup.string(),
+        externalMongoId: yup.objectId(),
         favouriteNumber: yup.number().required(),
         type: yup.string(),
       }),
     )
 
-    const manData = { name: 'Piero', favouriteNumber: '10' }
+    const manData = {
+      name: 'Piero',
+      favouriteNumber: '10',
+      externalMongoId: '59f1a8946d4cd000101c73da',
+    }
     Book.create(manData)
       .then(book => {
         const theBook = book.toObject()

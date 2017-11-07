@@ -36,6 +36,7 @@
     "loopback": "3.8.0",
     "loopback-boot": "2.24.1",
     "mocha": "3.1.2",
+    "mongodb": "2.2.33",
     "nsp": "2.6.2",
     "nyc": "10.3.2",
     "should": "11.1.2",
