@@ -1,8 +1,7 @@
-const AdvancedValidation = require('./lib/lyvMixin')
 const { validateRemoteMethodHook } = require('./lib/validationUtils')
+const yup = require('./lib/yup')
 
-module.exports = (app) => {
-  app.loopback.modelBuilder.mixins.define('AdvancedValidation', AdvancedValidation)
+module.exports = {
+  validateRemoteMethodHook,
+  yup,
 }
-
-module.exports.validateRemoteMethodHook = validateRemoteMethodHook
