@@ -6,9 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "posttest": "nsp check",
-    "cover": "nyc --reporter=lcov --reporter=text-lcov npm test",
-    "postcover": "nsp check"
+    "cover": "nyc --reporter=lcov --reporter=text-lcov npm test"
   },
   "license": "ISC",
   "dependencies": {
