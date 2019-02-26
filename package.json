@@ -1,14 +1,12 @@
 {
   "name": "lyv",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "",
   "author": "Piero Maltese <maltesepiero@gmail.com> (https://github.com/pierissimo)",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "posttest": "nsp check",
-    "cover": "nyc --reporter=lcov --reporter=text-lcov npm test",
-    "postcover": "nsp check"
+    "cover": "nyc --reporter=lcov --reporter=text-lcov npm test"
   },
   "license": "ISC",
   "dependencies": {
